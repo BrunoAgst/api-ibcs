@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const database = require('../database/database');
+const verifyR = require('../function/verifyJSON');
 
 router.get('/v1/form', (req, res) => {
     
@@ -10,10 +11,8 @@ router.get('/v1/form', (req, res) => {
     }).catch(err => {
         console.log(err);
         res.send("Error");
-    
+
     });
-
 });
-
 
 module.exports = router;
