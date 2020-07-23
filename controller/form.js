@@ -6,17 +6,18 @@ const verifyJSON = require('../function/verifyJSON');
 router.get('/v1/form', (req, res) => {
     
     database.select().table("form").orderBy("id", "asc").then(data => {
+        res.statusCode = 200;
         res.json(data);
-    
+        
     }).catch(err => {
-        console.log(err);
+        res.statusCode = 400;
         res.send("Error");
 
     });
 });
 
 router.post('/v1/form', async (req, res) => {
-    var form = req.body;
+    const form = req.body;
     var result = await verifyJSON(form);
 
     if(result !== true){
@@ -37,5 +38,33 @@ router.post('/v1/form', async (req, res) => {
 
 });
 
+router.delete('/v1/form/:id', (req, res) => {
+    const id = req.params.id;
+    var idN = parseInt(id);
+
+    if(idN === null || idN === undefined || idN.length <= 0){
+        res.statusCode = 400;
+        res.send("ID inválido");
+        return
+    }
+    database.select().where({id: idN}).table("form").then(data => {
+        if(data.length < 1){
+            res.statusCode = 404;
+            res.send("Não encontrado");
+            return
+        };
+
+        database.where({id: idN}).delete().table("form").then(data => {
+            res.statusCode = 200;
+            res.send("Deletado com sucesso");
+    
+        }).catch(err => {
+            res.statusCode = 404;
+            res.send("Erro");
+    
+        });
+    });
+        
+});
 
 module.exports = router;
