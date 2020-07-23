@@ -10,6 +10,7 @@ module.exports = async function verifyJSON(body){
         store = await notRequiredF(body.store, 80);
         work =  await notRequiredF(body.work, 80);
         description =  await notRequiredF(body.description, 250);
+        address = await notRequiredF(body.address, 100);
         facebook = await notRequiredF(body.facebook, 50);
         instagram = await notRequiredF(body.instagram, 50);
 
@@ -19,6 +20,7 @@ module.exports = async function verifyJSON(body){
             && store == true 
             && work == true
             && description == true
+            && address == true
             && facebook == true
             && instagram == true
         ){
