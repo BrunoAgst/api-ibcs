@@ -48,7 +48,8 @@ router.post('/v1/auth', async (req, res) => {
                     return  
                 }
             }
-             cont += 1;
+            
+            cont += 1;
            
             if(cont == data.length){
                 res.statusCode = 400;

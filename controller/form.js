@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const database = require('../database/database');
 const verifyJSON = require('../function/verifyJSON');
+const auth = require('../middleware/auth');
 
 router.get('/v1/form', (req, res) => {
     
@@ -16,7 +17,7 @@ router.get('/v1/form', (req, res) => {
     });
 });
 
-router.post('/v1/form', async (req, res) => {
+router.post('/v1/form', auth, async (req, res) => {
     const data = req.body;
     var result = await verifyJSON(data);
 
@@ -38,7 +39,7 @@ router.post('/v1/form', async (req, res) => {
 
 });
 
-router.delete('/v1/form/:id', (req, res) => {
+router.delete('/v1/form/:id', auth, (req, res) => {
     const id = req.params.id;
     const idN = parseInt(id);
 
@@ -66,7 +67,7 @@ router.delete('/v1/form/:id', (req, res) => {
     });     
 });
 
-router.put('/v1/form/:id', (req, res) => {
+router.put('/v1/form/:id', auth, (req, res) => {
     const id = req.params.id;
     const idN = parseInt(id);
 
