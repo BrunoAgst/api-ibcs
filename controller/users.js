@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const verifyLogin = require('../function/verifyLogin');
 const database = require('../database/database');
+const auth = require('../middleware/auth');
 
-router.post('/v1/users', async (req, res) => {
+router.post('/v1/users', auth, async (req, res) => {
     const {email, password} = req.body;
 
     var data = await verifyLogin(email, password);
